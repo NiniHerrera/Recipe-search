@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niña's Recipe Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #ff6f61;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #ff3c33;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .recipe-card {
+            border: 1px solid #ddd;
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .recipe-card h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Niña's Recipe Search</h1>
+        <p>Find recipes for your favorite foods</p>
+    </header>
+
+    <div class="container">
+        <input type="text" id="searchInput" placeholder="Search for a recipe...">
+        <button onclick="searchRecipes()">Search</button>
+
+        <div id="results">
+        </div>
+    </div>
+
+    <script>
+        const recipes = [
+            {
+                name: "Spaghetti Bolognese",
+                ingredients: "Spaghetti, minced beef, tomato sauce, garlic, onion, olive oil",
+                instructions: "Cook spaghetti. Sauté beef with garlic and onion. Add tomato sauce and simmer. Serve with spaghetti."
+            },
+            {
+                name: "Chicken Curry",
+                ingredients: "Chicken, curry powder, coconut milk, onion, garlic, ginger, rice",
+                instructions: "Sauté chicken with garlic, onion, and ginger. Add curry powder and coconut milk. Simmer and serve with rice."
+            },
+            {
+                name: "Grilled Cheese Sandwich",
+                ingredients: "Bread, butter, cheddar cheese",
+                instructions: "Butter the bread, place cheese between slices, and grill in a pan until golden brown."
+            },
+            {
+                name: "Tacos",
+                ingredients: "Tortillas, ground beef, lettuce, tomatoes, cheese, sour cream",
+                instructions: "Cook ground beef. Assemble tacos with tortillas, beef, and toppings."
+            },
+            {
+                name: "Caesar Salad",
+                ingredients: "Romaine lettuce, croutons, parmesan cheese, Caesar dressing",
+                instructions: "Toss lettuce with croutons, cheese, and dressing. Serve chilled."
+            }
+        ];
+
+        function searchRecipes() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; 
+            const filteredRecipes = recipes.filter(recipe => 
+                recipe.name.toLowerCase().includes(query) ||
+                recipe.ingredients.toLowerCase().includes(query)
+            );
+
+            if (filteredRecipes.length > 0) {
+                filteredRecipes.forEach(recipe => {
+                    const recipeCard = document.createElement('div');
+                    recipeCard.classList.add('recipe-card');
+                    recipeCard.innerHTML = `
+                        <h3>${recipe.name}</h3>
+                        <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                        <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                    `;
+                    resultsDiv.appendChild(recipeCard);
+                });
+            } else {
+                resultsDiv.innerHTML = '<p>No recipes found for your search.</p>';
+            }
+        }
+    </script>
+
+</body>
+</html>
